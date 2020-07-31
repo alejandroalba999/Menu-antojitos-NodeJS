@@ -9,5 +9,5 @@ if (process.env.NODE_ENV === 'dev') {
     urlDB = 'mongodb://localhost:27017/menu'; //mongodb://localhost:27017/ruta
 } else {
     urlDB = '';
-    
 }
+process.env.URLDB = urlDB;

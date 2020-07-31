@@ -30,7 +30,7 @@ mongoose.connect(process.env.URLDB, {
     useUnifiedTopology: true,
     useCreateIndex: true
 }, (err, resp) => {
-    if (err) throw err;
+    if (err) throw err, console.log("Error ALEX");
     console.log('Base de datos Online');
 });
 
