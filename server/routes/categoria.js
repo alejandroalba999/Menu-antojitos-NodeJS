@@ -8,7 +8,7 @@ const app = express();
 
 
 app.get('/obtener', (req, res) => {
-    Categoria.find({blnActivo:true}) 
+    Categoria.find({}).sort({_id:-1}) 
         //solo aceptan valores numericos
         .then((categoria)=>{
             return res.status(200).json({
@@ -30,7 +30,54 @@ app.get('/obtener', (req, res) => {
             });
         })
 });
-
+app.get('/obtener/:nombre', (req, res) => {
+    let nombre = req.params.nombre;
+    Categoria.find({blnActivo:true, strNombre: nombre}).sort({_id:-1}) 
+        //solo aceptan valores numericos
+        .then((categoria)=>{
+            return res.status(200).json({
+                ok: true,
+                resp: 200,
+                msg: 'Success: Informacion obtenida correctamente.',
+                cont: {
+                    categoria
+                }
+            });
+        }).catch((err)=>{
+            return res.status(500).json({
+                ok: false,
+                resp: 500,
+                msg: 'Error: Error al obtener la api',
+                cont: {
+                    err: err.message
+                }
+            });
+        })
+});
+app.get('/obtenerId/:id', (req, res) => {
+    let id = req.params.id;
+    Categoria.find({ _id: id}) 
+        //solo aceptan valores numericos
+        .then((categoria)=>{
+            return res.status(200).json({
+                ok: true,
+                resp: 200,
+                msg: 'Success: Informacion obtenida correctamente.',
+                cont: {
+                    categoria
+                }
+            });
+        }).catch((err)=>{
+            return res.status(500).json({
+                ok: false,
+                resp: 500,
+                msg: 'Error: Error al obtener la api',
+                cont: {
+                    err: err.message
+                }
+            });
+        })
+});
 
 app.post('/registrar', (req, res) => {
     let categoria = new Categoria(req.body);
@@ -109,6 +156,30 @@ app.delete('/eliminar/:id', (req, res) => {
             ok: true,
             resp: 200,
             msg: 'Success: Informacion eliminada correctamente.',
+            cont: {
+                categoria
+            }
+        });
+    }).catch((err)=>{
+        return res.status(500).json({
+            ok: false,
+            resp: 500,
+            msg: 'Error: Error al eliminar la informacion',
+            cont: {
+                err: err.message
+            }
+        });
+    })
+});
+app.delete('/activar/:id', (req, res) => {
+    let id = req.params.id;
+
+    Categoria.findByIdAndUpdate(id,{ blnActivo: true }, { new: true, runValidators: true, context: 'query' })
+    .then((categoria)=>{
+        return res.status(200).json({
+            ok: true,
+            resp: 200,
+            msg: 'Success: Informacion activada correctamente.',
             cont: {
                 categoria
             }

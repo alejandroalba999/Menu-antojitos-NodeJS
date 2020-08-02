@@ -6,7 +6,8 @@ let Schema = mongoose.Schema;
 let categoria = new Schema({
     strNombre: {
         type: String,
-        required: [true, "Ingrese nombre de la categoria"]
+        required: [true, "Ingrese nombre de la categoria"],
+        unique: true
     },
     strDescripcion: {
         type: String,
@@ -16,6 +17,10 @@ let categoria = new Schema({
         type: Boolean,
         default: true
     }
+    
 });
 
+categoria.plugin(uniqueValidator, {
+    message: '{PATH} Debe ser único y diferente'
+});
 module.exports = mongoose.model('Categoria', categoria);
