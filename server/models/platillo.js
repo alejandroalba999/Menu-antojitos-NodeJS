@@ -12,7 +12,8 @@ let platillo = new Schema({
     },
     strNombre: {
         type: String,
-        required: [true, "Ingrese el nombre del platillo"]
+        required: [true, "Ingrese el nombre del platillo"],
+        unique: true
     },
     strDescripcion: {
         type: String,
@@ -34,6 +35,9 @@ let platillo = new Schema({
         type: Boolean,
         default: true
     }
+});
+platillo.plugin(uniqueValidator, {
+    message: '{PATH} Debe ser único y diferente'
 });
 
 module.exports = mongoose.model('Platillo', platillo);

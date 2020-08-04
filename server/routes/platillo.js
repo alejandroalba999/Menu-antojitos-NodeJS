@@ -30,6 +30,41 @@ app.get('/obtener', (req, res) => {
             });
         })
 });
+app.get('/obtenerIdCategoria/:idCategoria', (req, res) => {
+    let idCategoria = req.params.idCategoria;
+    Platillo.find({blnActivo:true,idCategoria: idCategoria}).populate('idCategoria') 
+        //solo aceptan valores numericos
+        .then((platillo)=>{
+            if(platillo === null || platillo.length === 0 || platillo === undefined){
+                return res.status(500).json({
+                    ok: false,
+                    resp: 500,
+                    msg: 'Error: No cuenta con registros de platillos',
+                    cont: {
+                        platillo: 0
+                    }
+                });
+            }
+            return res.status(200).json({
+                ok: true,
+                resp: 200,
+                msg: 'Success: Informacion obtenida correctamente.',
+                cont: {
+                    platillo
+                }
+            });
+        }).catch((err)=>{
+            return res.status(500).json({
+                ok: false,
+                resp: 500,
+                msg: 'Error: Error al obtener la api',
+                cont: {
+                    err: err.message,
+                    count : 0
+                }
+            });
+        })
+});
 
 
 app.post('/registrar', (req, res) => {
