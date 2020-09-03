@@ -10,9 +10,12 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.0",
+    "connect-multiparty": "^2.2.0",
     "express": "^4.17.1",
+    "express-fileupload": "^1.2.0",
     "mongoose": "^5.9.27",
     "mongoose-unique-validator": "^2.0.3",
+    "neat-csv": "^5.2.0",
     "nodemon": "^2.0.4",
     "underscore": "^1.10.2"
   }
