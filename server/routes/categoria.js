@@ -1,11 +1,25 @@
 const express = require('express');
 const _ = require('underscore');
+const fileUpload = require('express-fileupload');
 const Categoria = require('../models/categoria'); //subir nivel
 const fs = require('fs');
+const neatCsv = require('neat-csv');
 const path = require('path');
 const app = express();
 
 
+app.get('/buscar', (req,res)=>{
+    const fs = require('fs')
+
+    fs.readFile('./uploads/gAw6x1AS6A6D13NXZGT4zu7l.csv', async (err, data) => {
+      if (err) {
+        console.error(err)
+        return
+      }
+     let valores = await neatCsv(data);
+     console.log(valores);
+    })
+});
 
 app.get('/obtener', (req, res) => {
     Categoria.find({}).sort({_id:-1}) 
